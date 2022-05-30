@@ -1,6 +1,5 @@
 ///SPDX-License-Identifier: Unlicense
 pragma solidity 0.8.4;
-
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract personalToken is ERC20{
     address private tokenOwner = msg.sender;
@@ -10,12 +9,15 @@ contract personalToken is ERC20{
         tokenAddress=address(this);
     }       
 }
-contract exchange{
+contract rewardToken{
+
+}
+contract exchangeTokenWithEth {
     IERC20 public tokenContract;
     address owner;
     uint256 private _price = 1;
-    constructor(address _tokenAddress,address _tokenOwner){
-        tokenContract = IERC20(_tokenAddress);
+    constructor(address _tokenContractAddress,address _tokenOwner){
+        tokenContract = IERC20(_tokenContractAddress);
         owner = _tokenOwner;
     }
     function purchaseToken() external payable {
@@ -24,9 +26,6 @@ contract exchange{
         payable(owner).transfer((msg.value)/_price);
     }
 }
-contract rewardToken{
-
-}
-contract stake{
+contract stakeToken{
 
 }
