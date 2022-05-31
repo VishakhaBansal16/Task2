@@ -8,7 +8,7 @@ contract personalToken is ERC20{
 }
 contract rewardToken is ERC20 {
     constructor() ERC20("RewardToken", "RT"){
-    _mint(msg.sender, 100);
+        _mint(msg.sender, 100);
     }
 }
 contract exchangeTokenWithEth { 
@@ -31,30 +31,30 @@ contract stakingContract{
     uint256 public myRewardTokens;
     uint256 public purchasedTokens;
     struct stake{
-    uint amount;
-    uint timestamp; 
+        uint amount;
+        uint timestamp; 
     }
     mapping(address => stake) public stakes;
     mapping(address => uint256) public stakingTime;
     constructor(address _exchangeTokenWithEthAddress, address _rewardTokenOwnerAddress){
-    tokenContract= IERC20(_exchangeTokenWithEthAddress);
-    owner=_rewardTokenOwnerAddress;
+        tokenContract= IERC20(_exchangeTokenWithEthAddress);
+        owner=_rewardTokenOwnerAddress;
     }
     function stakeToken(uint256 amount) public payable{
-    stakes[msg.sender]=stake(amount, block.timestamp);
-    tokenContract.transferFrom(msg.sender,address(this),stakes[msg.sender].amount);
+        stakes[msg.sender]=stake(amount, block.timestamp);
+        tokenContract.transferFrom(msg.sender,address(this),stakes[msg.sender].amount);
     }
     function unStakeToken() public payable{             
         tokenContract.transferFrom(address(this), msg.sender, stakes[msg.sender].amount); 
     }
     function collectReward() public payable returns (bool){
-    stakingTime[msg.sender]+=block.timestamp - stakes[msg.sender].timestamp;
-    myRewardTokens= stakingTime[msg.sender]/1; 
-    tokenContract.transferFrom(owner, msg.sender, myRewardTokens);
-    return true;
+        stakingTime[msg.sender]+=block.timestamp - stakes[msg.sender].timestamp;
+        myRewardTokens= stakingTime[msg.sender]/1; 
+        tokenContract.transferFrom(owner, msg.sender, myRewardTokens);
+        return true;
     }
     function totalTokens() public view returns(uint256){
-    uint256 currentTotalTokens = myRewardTokens+purchasedTokens;
-    return currentTotalTokens;
+        uint256 currentTotalTokens = myRewardTokens+purchasedTokens;
+        return currentTotalTokens;
     }
 }
