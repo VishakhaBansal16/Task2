@@ -51,6 +51,9 @@ function stakeToken(uint256 amount) public payable{
     stakes[msg.sender]=stake(amount, block.timestamp);
     tokenContract.transferFrom(address(this),msg.sender,stakes[msg.sender].amount);
 }
+function unStakeToken() public payable{             
+        tokenContract.transferFrom(address(this), msg.sender, stakes[msg.sender].amount); 
+    }
 function collectReward() public payable returns (bool){
     stakingTime[msg.sender]+=block.timestamp - stakes[msg.sender].timestamp;
     myRewardTokens= stakingTime[msg.sender]/1;
