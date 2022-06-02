@@ -4,12 +4,12 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 contract personalToken is ERC20, Ownable{
     constructor() ERC20("Token","TK"){        
-        _mint(msg.sender, 1000 );
+        _mint(msg.sender, 1000 * 10**18);
     }       
 }
 contract rewardToken is ERC20, Ownable{
     constructor() ERC20("RewardToken", "RT"){
-        _mint(msg.sender, 100);
+        _mint(msg.sender, 100 * 10**18);
     }
 }
 contract exchangeTokenWithEth { 
@@ -21,7 +21,7 @@ contract exchangeTokenWithEth {
         owner = _personalTokenOwner;
     }
     function purchaseToken(uint _amount) external payable{
-        //require(msg.value>0,"Insufficient Balance");
+        require(msg.value>0,"Insufficient Balance");
         tokenContract.approve(msg.sender,_amount);
         tokenContract.transferFrom(owner,msg.sender,_amount);
         payable(owner).transfer(_amount);
